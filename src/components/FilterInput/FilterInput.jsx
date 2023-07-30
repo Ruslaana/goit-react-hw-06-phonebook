@@ -16,11 +16,11 @@ const FilterInput = () => {
 
   return (
     <Label>
-      Знайти контакти за ім'ям
+      Find contact by name
       <Input
         type="text"
         name="filter"
-        placeholder="Введіть ім'я контакту"
+        placeholder="Enter the name of the contact"
         value={filter}
         onChange={handleChangeFilter}
       />

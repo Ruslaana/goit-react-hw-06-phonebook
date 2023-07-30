@@ -34,7 +34,7 @@ const ContactForm = () => {
   return (
     <Form onSubmit={handleSubmit}>
       <Label>
-        Ім'я
+        Name
         <InputForm
           onChange={handleChange}
           type="text"
@@ -46,7 +46,7 @@ const ContactForm = () => {
         />
       </Label>
       <Label>
-        Номер
+        Number
         <InputForm
           onChange={handleChange}
           type="tel"
@@ -57,7 +57,7 @@ const ContactForm = () => {
           required
         />
       </Label>
-      <Button type="submit">Додати контакт</Button>
+      <Button type="submit">Add contact</Button>
     </Form>
   );
 };
