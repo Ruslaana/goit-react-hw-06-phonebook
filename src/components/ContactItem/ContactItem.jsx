@@ -19,7 +19,7 @@ const ContactsItem = ({ id, name, number }) => {
       <ContactName>
         {name}:<ContactNumber>{number}</ContactNumber>
       </ContactName>
-      <Button onClick={handleDelete}>Видалити</Button>
+      <Button onClick={handleDelete}>Delete</Button>
     </ContactItem>
   );
 };

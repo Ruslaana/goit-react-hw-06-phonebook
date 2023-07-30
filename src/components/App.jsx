@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
+
 import Section from './Section';
 import ContactForm from './ContactForm';
 import FilterInput from './FilterInput';
 import ContactsList from './ContactsList';
+
 import { addContact, initializeContacts, saveContacts } from '../redux/contactsSlice';
 
 const App = () => {
@@ -39,7 +41,7 @@ const App = () => {
 
     const existingContact = contacts.find((contact) => contact.name === data.name);
     if (existingContact) {
-      alert(`${data.name} - контакт вже існує`);
+      alert(`${data.name} - the contact already exists`);
     } else {
       dispatch(addContact(newContact));
     }
@@ -54,10 +56,10 @@ const App = () => {
 
   return (
     <>
-      <Section title="Телефонна книга">
+      <Section title="Telephone book">
         <ContactForm addContact={handleAddContact} />
       </Section>
-      <Section title="Контакти">
+      <Section title="Contacts">
         <FilterInput />
         <ContactsList contacts={filteredContacts} />
       </Section>
