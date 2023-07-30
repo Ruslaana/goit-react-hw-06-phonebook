@@ -1,11 +1,11 @@
-// ContactItem.js
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useDispatch } from 'react-redux';
-import { deleteContact } from '../redux/contactsSlice';
-
 import { ContactItem, ContactName, ContactNumber, Button } from './ContactItem.styled';
+
+import { useDispatch } from 'react-redux';
+import { deleteContact } from '../../redux/contactsSlice';
+
 
 const ContactsItem = ({ id, name, number }) => {
   const dispatch = useDispatch();

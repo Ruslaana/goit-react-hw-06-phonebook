@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import Section from './Section';
@@ -9,21 +9,29 @@ import { addContact, initializeContacts, saveContacts } from '../redux/contactsS
 
 const App = () => {
   const dispatch = useDispatch();
-  const [contacts, setContacts] = useState([]);
+  const contacts = useSelector((state) => state.contacts.contacts);
 
   useEffect(() => {
-    const storedContacts = localStorage.getItem('contacts');
-    if (storedContacts) {
-      dispatch(initializeContacts(JSON.parse(storedContacts)));
+    try {
+      const storedContacts = localStorage.getItem('contacts');
+      if (storedContacts) {
+        dispatch(initializeContacts(JSON.parse(storedContacts)));
+      }
+    } catch (error) {
+      console.error('Error retrieving data from localStorage:', error);
     }
-  }, [dispatch, setContacts]);
+  }, [dispatch]);
 
   useEffect(() => {
-    localStorage.setItem('contacts', JSON.stringify(contacts));
-    dispatch(saveContacts(contacts));
+    try {
+      localStorage.setItem('contacts', JSON.stringify(contacts));
+      dispatch(saveContacts(contacts));
+    } catch (error) {
+      console.error('Error saving data to localStorage:', error);
+    }
   }, [contacts, dispatch]);
 
-  const addContact = (data) => {
+  const handleAddContact = (data) => {
     const newContact = {
       ...data,
       id: nanoid(),
@@ -47,7 +55,7 @@ const App = () => {
   return (
     <>
       <Section title="Телефонна книга">
-        <ContactForm addContact={addContact} />
+        <ContactForm addContact={handleAddContact} />
       </Section>
       <Section title="Контакти">
         <FilterInput />

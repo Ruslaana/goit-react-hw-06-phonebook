@@ -1,14 +1,11 @@
-// contactsSlice.js
 import { createSlice } from '@reduxjs/toolkit';
-
-const initialState = {
-  contacts: [],
-  filter: '',
-};
 
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState,
+  initialState: {
+    contacts: [],
+    filter: '',
+  },
   reducers: {
     addContact: (state, action) => {
       state.contacts.push(action.payload);
@@ -16,18 +13,22 @@ const contactsSlice = createSlice({
     deleteContact: (state, action) => {
       state.contacts = state.contacts.filter((contact) => contact.id !== action.payload);
     },
-    setFilter: (state, action) => {
-      state.filter = action.payload;
-    },
     initializeContacts: (state, action) => {
       state.contacts = action.payload;
     },
-    saveContacts: (state) => {
+    saveContacts: (state, action) => {
+      try {
+        localStorage.setItem('contacts', JSON.stringify(state.contacts));
+      } catch (error) {
+        console.error('Error saving data to localStorage:', error);
+      }
+    },
+    setFilter: (state, action) => {
+      state.filter = action.payload;
     },
   },
 });
 
-export const { addContact, deleteContact, setFilter, initializeContacts, saveContacts } =
-  contactsSlice.actions;
+export const { addContact, deleteContact, initializeContacts, saveContacts, setFilter } = contactsSlice.actions;
 
 export default contactsSlice.reducer;

@@ -1,9 +1,8 @@
-// FilterInput.js
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { setFilter } from '../redux/contactsSlice';
 
+import { setFilter } from '../../redux/contactsSlice';
 
 import { Label, Input } from './FilterInput.styled';
 

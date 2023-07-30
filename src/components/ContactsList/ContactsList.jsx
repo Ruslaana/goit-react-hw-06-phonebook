@@ -1,8 +1,8 @@
-// ContactsList.js
 import React from 'react';
-import { useSelector } from 'react-redux';
-import ContactsItem from '../ContactItem'; 
 import PropTypes from 'prop-types';
+
+import { useSelector } from 'react-redux';
+import ContactsItem from '../ContactItem/ContactItem'; 
 
 import { List } from './ContactsList.styled';
 
