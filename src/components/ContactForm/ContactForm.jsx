@@ -1,13 +1,17 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { Button, Form, Label, InputForm } from './ContactForm.styled';
 
-const ContactForm = ({ addContact }) => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+import { useDispatch } from 'react-redux';
+import { addContact } from '../redux/contactsSlice';
 
-  const handleChange = event => {
+const ContactForm = () => {
+  const dispatch = useDispatch();
+  const [name, setName] = useState(''); // Додали хук useState для стану імені
+  const [number, setNumber] = useState(''); // Додали хук useState для стану номера
+
+  const handleChange = (event) => {
     const { name, value } = event.target;
     if (name === 'name') {
       setName(value);
@@ -16,9 +20,9 @@ const ContactForm = ({ addContact }) => {
     }
   };
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    addContact({ name, number });
+    dispatch(addContact({ name, number })); // Диспетчеризуємо дію для додавання контакту
     formReset();
   };
 
@@ -30,30 +34,30 @@ const ContactForm = ({ addContact }) => {
   return (
     <Form onSubmit={handleSubmit}>
       <Label>
-        Name
+        Ім'я
         <InputForm
           onChange={handleChange}
           type="text"
           name="name"
           value={name}
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+          title="Ім'я може містити лише літери, апостроф, тире та пробіли. Наприклад Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
         />
       </Label>
       <Label>
-        Number
+        Номер
         <InputForm
           onChange={handleChange}
           type="tel"
           name="number"
           value={number}
           pattern="\+?\d{1,4}[-.\s]?\(?\d{1,3}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-          title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+          title="Номер телефону повинен містити цифри та може містити пробіли, тире, дужки та може починатися з +"
           required
         />
       </Label>
-      <Button type="submit">Add contact</Button>
+      <Button type="submit">Додати контакт</Button>
     </Form>
   );
 };
