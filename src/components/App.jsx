@@ -18,7 +18,7 @@ const App = () => {
   const contacts = useSelector(getContacts);
   const filter = useSelector(getFilter);
 
-  const addContact = (data) => {
+  const handleAddContact = (data) => {
     const newContact = { ...data, id: nanoid() };
     const existingContact = contacts.contacts.find((contact) => contact.name === data.name);
     if (existingContact) {
@@ -28,7 +28,7 @@ const App = () => {
     }
   };
 
-  const deleteContact = (userId) => {
+  const handleDeleteContact = (userId) => {
     dispatch(deleteContact(userId));
   };
 
@@ -45,11 +45,11 @@ const App = () => {
   return (
     <>
       <Section title="Phonebook">
-        <ContactForm addContact={addContact} />
+        <ContactForm addContact={handleAddContact} />
       </Section>
       <Section title="Contacts">
         <FilterInput value={filter.filter} onChangeFilter={handleChangeFilter} />
-        <ContactsList contacts={getFilteredContacts()} delContact={deleteContact} />
+        <ContactsList contacts={getFilteredContacts()} delContact={handleDeleteContact} />
       </Section>
     </>
   );
