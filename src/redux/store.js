@@ -18,7 +18,7 @@ import { filterReducer } from './filterSlice';
 const phonebookPersistConfig = {
   key: 'user',
   storage,
-  blacklist: ['filter'],
+  whitelist: ['filter'],
 };
 
 const rootReducer = combineReducers({
