@@ -1,11 +1,30 @@
 import { useState } from 'react';
-import PropTypes from 'prop-types';
 
 import { Button, Form, Label, InputForm } from './ContactForm.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { nanoid } from '@reduxjs/toolkit';
+import { getContacts } from 'redux/selectors';
+import { addContact } from 'redux/contactsSlice';
 
-const ContactForm = ({ addContact }) => {
+const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+
+  const dispatch = useDispatch();
+
+  const { contacts } = useSelector(getContacts);
+
+  const handleAddContact = data => {
+    const newContact = { ...data, id: nanoid() };
+    const existingContact = contacts.find(
+      contact => contact.name === data.name
+    );
+    if (existingContact) {
+      alert(`${data.name} this contact is already exist`);
+    } else {
+      dispatch(addContact(newContact));
+    }
+  };
 
   const handleChange = event => {
     const { name, value } = event.target;
@@ -18,7 +37,7 @@ const ContactForm = ({ addContact }) => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    addContact({ name, number });
+    handleAddContact({ name, number });
     formReset();
   };
 
@@ -36,7 +55,7 @@ const ContactForm = ({ addContact }) => {
           type="text"
           name="name"
           value={name}
-          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
         />
@@ -48,7 +67,7 @@ const ContactForm = ({ addContact }) => {
           type="tel"
           name="number"
           value={number}
-          pattern="\+?\d{1,4}[-.\s]?\(?\d{1,3}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          pattern="\+?\d{1,4}?[\-.\s]?\(?\d{1,3}?\)?[\-.\s]?\d{1,4}[\-.\s]?\d{1,4}[\-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
         />
@@ -56,10 +75,6 @@ const ContactForm = ({ addContact }) => {
       <Button type="submit">Add contact</Button>
     </Form>
   );
-};
-
-ContactForm.propTypes = {
-  addContact: PropTypes.func,
 };
 
 export default ContactForm;
